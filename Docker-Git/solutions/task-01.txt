@@ -1,0 +1,12 @@
+git init                               - initializes git repository
+git config --global user.name "NAME"   - configures user's name for this repository
+git congig --global user.email "email" - configures user's email fot this repository
+git add .gitignore                     - stages `.gitignore` file
+git commit -m "Added node_modules, .env, *.log in gitignore" - commits `.gitignore` file
+git add README.md package.json         - stages `README.md` and `package.json` files
+git commit -m "Added README and package.json together"       - commits `README.md` and `package.json` files
+git log --oneline                      - shows a compact summary of a commit history
+
+
+d00780f (HEAD -> master) Added README and package.json together
+d04d1b3 Added node_modules, .env, *.log in gitignore
