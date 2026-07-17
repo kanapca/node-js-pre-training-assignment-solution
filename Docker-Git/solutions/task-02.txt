@@ -1,0 +1,33 @@
+git checkout -b feature/add-scripts
+
+* feature/add-scripts
+  master
+
+git add package.json
+git commit -m "Added 'scripts' section to 'package.json'"
+git checkout master
+
+  feature/add-scripts
+* master
+
+git branch feature/add-dependencies
+
+  feature/add-dependencies
+  feature/add-scripts
+* master
+
+git merge feature/add-scripts
+
+  feature/add-dependencies
+  feature/add-scripts
+* master
+
+git branch -d feature/add-scripts
+
+  feature/add-dependencies
+* master
+
+git log --graph --oneline
+* ebcee61 (HEAD -> master, feature/add-dependencies) Added 'scripts' section to 'package.json'
+* d00780f Added README and package.json together
+* d04d1b3 Added node_modules, .env, *.log in gitignore
