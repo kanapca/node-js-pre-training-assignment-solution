@@ -65,13 +65,61 @@ export function filterArray<T>(source: readonly T[], predicate: (item: T, index:
 }
 
 export function reduceArray<T, R>(source: readonly T[], reducer: (acc: R, item: T, index: number) => R, initial: R): R {
-  throw new Error('reduceArray: not implemented');
+  try {
+    if(source == null || source == undefined) {
+      throw new TypeError("Can't reduce null or undefined source");
+    }
+
+
+  } catch(error) {
+    if(error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error("Unknown error");
+    }
+
+    throw error;
+  }
+  
+  //throw new Error('reduceArray: not implemented');
 }
 
 export function partition<T>(source: readonly T[], predicate: (item: T) => boolean): [T[], T[]] {
-  throw new Error('partition: not implemented');
+  try {
+    if(source == null || source == undefined) {
+      throw new TypeError("Can't part null or undefined source");
+    }
+    
+
+  } catch(error) {
+    if(error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error("Unknown error");
+    }
+
+    throw error;
+  }
+  
+  //throw new Error('partition: not implemented');
 }
 
 export function groupBy<T, K extends PropertyKey>(source: readonly T[], keySelector: (item: T) => K): Record<K, T[]> {
-  throw new Error('groupBy: not implemented');
+  try {
+    if(source == null || source == undefined) {
+      throw new TypeError("Can't group null or undefined source");
+    }
+    
+
+  } catch(error) {
+    if(error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error("Unknown error");
+    }
+
+    throw error;
+  }
+  
+  //throw new Error('groupBy: not implemented');
 }
