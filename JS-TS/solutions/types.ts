@@ -7,7 +7,9 @@ interface Todo {
 }
 
 enum TodoStatus {
-    
+    PENDING,
+    IN_PROGRESS,
+    COMPLETED
 }
 
 
