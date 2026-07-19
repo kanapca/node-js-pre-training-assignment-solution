@@ -134,7 +134,7 @@ export function groupBy<T, K extends PropertyKey>(source: readonly T[], keySelec
       if (!result[key]) {
         result[key] = [];
       }
-      
+
       result[key].push(source[item]);
     }
 
