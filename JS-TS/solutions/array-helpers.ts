@@ -96,6 +96,18 @@ export function partition<T>(source: readonly T[], predicate: (item: T) => boole
       throw new TypeError("Can't part null or undefined source");
     }
     
+    const result1: T[] = [];
+    const result2: T[] = [];
+
+    for(const item of source) {
+      if(predicate(item)) {
+        result1.push(item);
+      } else {
+        result2.push(item);
+      }
+    }
+    
+    return [result1, result2];
 
   } catch(error) {
     if(error instanceof Error) {
@@ -107,7 +119,7 @@ export function partition<T>(source: readonly T[], predicate: (item: T) => boole
     throw error;
   }
   
-  //throw new Error('partition: not implemented');
+  throw new Error('partition: not implemented');
 }
 
 export function groupBy<T, K extends PropertyKey>(source: readonly T[], keySelector: (item: T) => K): Record<K, T[]> {
@@ -127,5 +139,5 @@ export function groupBy<T, K extends PropertyKey>(source: readonly T[], keySelec
     throw error;
   }
   
-  //throw new Error('groupBy: not implemented');
+  throw new Error('groupBy: not implemented');
 }
