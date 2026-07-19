@@ -3,11 +3,64 @@
 // All helpers are declared but not implemented.
 
 export function mapArray<T, R>(source: readonly T[], mapper: (item: T, index: number) => R): R[] {
-  throw new Error('mapArray: not implemented');
+  try {
+    if(source == null || source == undefined) {
+      throw new TypeError("Can't map over null or undefined source");
+    }
+
+
+    const result: R[] = [];
+    let i = 0;
+    for(const item of source) {
+      result.push(mapper(item, i++));
+    }
+
+    return result;
+
+  } catch(error) {
+    if(error instanceof Error){
+      console.error(error.message);
+    } else {
+      console.error("Unknown error");
+    }
+
+
+    throw error;
+  }
+  
+
+  
+  //throw new Error('mapArray: not implemented');
 }
 
 export function filterArray<T>(source: readonly T[], predicate: (item: T, index: number) => boolean): T[] {
-  throw new Error('filterArray: not implemented');
+  try {
+    if(source == null || source == undefined) {
+      throw new TypeError("Can't filter null or undefined source");
+    }
+
+
+    const result: T[] = [];
+    let i = 0;
+    for(const item of source){
+      if(predicate(source[i], i)) {
+        result.push(source[i++]);
+      }
+    }
+    
+    return result;
+
+  } catch(error) {
+    if(error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error("Unknown error");
+    }
+
+
+    throw error;
+  }
+  //throw new Error('filterArray: not implemented');
 }
 
 export function reduceArray<T, R>(source: readonly T[], reducer: (acc: R, item: T, index: number) => R, initial: R): R {
