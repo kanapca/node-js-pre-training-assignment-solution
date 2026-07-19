@@ -43,11 +43,12 @@ export function filterArray<T>(source: readonly T[], predicate: (item: T, index:
     const result: T[] = [];
     let i = 0;
     for(const item of source){
-      if(predicate(source[i], i)) {
-        result.push(source[i++]);
+      if(predicate(item, i)) {
+        result.push(item);
       }
+      i++;
     }
-    
+
     return result;
 
   } catch(error) {
