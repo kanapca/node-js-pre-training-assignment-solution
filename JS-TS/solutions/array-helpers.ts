@@ -12,7 +12,7 @@ export function mapArray<T, R>(source: readonly T[], mapper: (item: T, index: nu
     const result: R[] = [];
     let i = 0;
     for(const item of source) {
-      result.push(mapper(item, i++));
+      result[i] = mapper(item, i++);
     }
 
     return result;
@@ -41,14 +41,14 @@ export function filterArray<T>(source: readonly T[], predicate: (item: T, index:
 
 
     const result: T[] = [];
-    let i = 0;
+    let sourceIndex = 0;
+    let resultIndex = 0;
     for(const item of source){
-      if(predicate(item, i)) {
-        result.push(item);
+      if(predicate(item, sourceIndex)) {
+        result[resultIndex++] = item;
       }
-      i++;
+    sourceIndex++;
     }
-
     return result;
 
   } catch(error) {
@@ -98,12 +98,14 @@ export function partition<T>(source: readonly T[], predicate: (item: T) => boole
     
     const result1: T[] = [];
     const result2: T[] = [];
+    let i1 = 0;
+    let i2 = 0;
 
     for(const item of source) {
       if(predicate(item)) {
-        result1.push(item);
+        result1[i1++] = item;
       } else {
-        result2.push(item);
+        result2[i2++] = item;
       }
     }
 
@@ -128,14 +130,14 @@ export function groupBy<T, K extends PropertyKey>(source: readonly T[], keySelec
       throw new TypeError("Can't group null or undefined source");
     }
     const result = {} as Record<K, T[]>;
-    for(const item in source) {
-      const key = keySelector(source[item]);
+    for(const item of source) {
+      const key = keySelector(item);
 
       if (!result[key]) {
         result[key] = [];
       }
 
-      result[key].push(source[item]);
+      result[key][result[key].length] = item;
     }
 
     return result;
