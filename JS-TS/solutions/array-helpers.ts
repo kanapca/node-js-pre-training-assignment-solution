@@ -69,7 +69,13 @@ export function reduceArray<T, R>(source: readonly T[], reducer: (acc: R, item: 
     if(source == null || source == undefined) {
       throw new TypeError("Can't reduce null or undefined source");
     }
+    let result: R = initial;
+    let i = 0;
+    for(const item of source) {
+      result = reducer(result, item, i)
+    }
 
+    return result;
 
   } catch(error) {
     if(error instanceof Error) {
