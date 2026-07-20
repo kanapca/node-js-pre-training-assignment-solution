@@ -15,5 +15,14 @@ export function clearCompleted(state: Todo[]): Todo[] {
 }
 
 export function countByStatus(state: Todo[], status: TodoStatus): number {
-  throw new Error('countByStatus: not implemented');
+  
+  const result = state.reduce((count, todo) => {
+    if(todo.status === status) {
+      count++;
+    }
+    return count;
+  }, 0)
+  
+  return result;
+  //throw new Error('countByStatus: not implemented');
 }
