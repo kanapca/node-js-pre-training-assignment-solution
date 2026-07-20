@@ -12,27 +12,36 @@ export function updateTodo(state: Todo[], id: number, update: Partial<Omit<Todo,
   }
   const result: Todo[] = [...state];
   for(let i in result) {
-    if(result[i].id == id) {
+    if(result[i].id === id) {
       result[i] = {...result[i], ...update};
       return result;
     }
   }
   
-  throw new Error(`Todo with id ${id} not found`);
+  throw new Error(`Unexpected error`);
 }
 
 export function removeTodo(state: Todo[], id: number): Todo[] {
   if(state == null || state == undefined) {
     throw new Error("Can't remove todo that wasn't added/doesn't exist");
   }
-  const result: Todo[] = state;
+  const result: Todo[] = [...state];
   for(let i in result) {
-    if(result[i].id = id) {
+    if(result[i].id === id) {
+      
     }
   }
   throw new Error('removeTodo: not implemented');
 }
 
 export function getTodo(state: Todo[], id: number): Todo | undefined {
-  throw new Error('getTodo: not implemented');
+  const result: Todo[] = [];
+  for(let i in state) {
+    if(state[i].id === id) {
+      result[0] = state[i];
+      return result[0];
+    }
+  }
+  return undefined;
+  //throw new Error('getTodo: not implemented');
 }
