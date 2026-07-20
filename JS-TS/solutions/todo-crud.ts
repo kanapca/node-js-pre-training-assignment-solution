@@ -25,13 +25,15 @@ export function removeTodo(state: Todo[], id: number): Todo[] {
   if(state == null || state == undefined) {
     throw new Error("Can't remove todo that wasn't added/doesn't exist");
   }
-  const result: Todo[] = [...state];
-  for(let i in result) {
-    if(result[i].id === id) {
-      
-    }
+  const index = state.findIndex(todo => todo.id === id);
+
+  if(index === -1) {
+    throw new Error(`Todo with id ${id} not found`);
   }
-  throw new Error('removeTodo: not implemented');
+
+  const result: Todo[] = [...state];
+  result.splice(index, 1);
+  return result;
 }
 
 export function getTodo(state: Todo[], id: number): Todo | undefined {
