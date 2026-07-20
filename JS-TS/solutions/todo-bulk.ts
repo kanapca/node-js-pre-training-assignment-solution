@@ -8,7 +8,10 @@ export function toggleAll(state: Todo[], completed: boolean): Todo[] {
 }
 
 export function clearCompleted(state: Todo[]): Todo[] {
-  throw new Error('clearCompleted: not implemented');
+  let result: Todo[] = [];
+  result = state.filter(todo => todo.status === TodoStatus.PENDING || todo.status === TodoStatus.IN_PROGRESS);
+  return result;
+  //throw new Error('clearCompleted: not implemented');
 }
 
 export function countByStatus(state: Todo[], status: TodoStatus): number {
