@@ -40,6 +40,12 @@ export class TodoApi {
   }
 
   async remove(id: number): Promise<void> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        this.item = removeTodo(this.item, id);
+        resolve();
+      }, this.random)
+    })
     //throw new Error('remove: not implemented');
   }
 
