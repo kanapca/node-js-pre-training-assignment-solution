@@ -1,5 +1,5 @@
 import { Todo, TodoStatus } from './types';
-import { mapArray, filterArray } from './array-helpers';
+import { mapArray, filterArray, reduceArray } from './array-helpers';
 
 export function toggleAll(state: Todo[], completed: boolean): Todo[] {
   const newStatus = completed ? TodoStatus.COMPLETED : TodoStatus.PENDING;
@@ -13,14 +13,11 @@ export function clearCompleted(state: Todo[]): Todo[] {
 }
 
 export function countByStatus(state: Todo[], status: TodoStatus): number {
-  
-  const result = state.reduce((count, todo) => {
+  return reduceArray(state, (count, todo) => {
     if(todo.status === status) {
       count++;
     }
     return count;
   }, 0)
-  
-  return result;
   //throw new Error('countByStatus: not implemented');
 }
