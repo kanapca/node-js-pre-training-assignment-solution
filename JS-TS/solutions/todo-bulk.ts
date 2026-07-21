@@ -1,5 +1,5 @@
 import { Todo, TodoStatus } from './types';
-import { mapArray } from './array-helpers';
+import { mapArray, filterArray } from './array-helpers';
 
 export function toggleAll(state: Todo[], completed: boolean): Todo[] {
   const newStatus = completed ? TodoStatus.COMPLETED : TodoStatus.PENDING;
@@ -8,9 +8,7 @@ export function toggleAll(state: Todo[], completed: boolean): Todo[] {
 }
 
 export function clearCompleted(state: Todo[]): Todo[] {
-  let result: Todo[] = [];
-  result = state.filter(todo => todo.status === TodoStatus.PENDING || todo.status === TodoStatus.IN_PROGRESS);
-  return result;
+  return filterArray(state, todo => todo.status === TodoStatus.PENDING || todo.status === TodoStatus.IN_PROGRESS);
   //throw new Error('clearCompleted: not implemented');
 }
 
