@@ -13,13 +13,13 @@ class TodoNotFoundError extends Error {
 
 export class TodoApi {
   private repo = new InMemoryRepository<Todo>();
-  private item: Todo[] = [];
   private random = Math.random() * 300;
 
   isTodoFound(id: number) {
     let index = -1;
-    for(let i in this.item) {
-      if(this.item[i].id == id) index = id;
+    let arr = this.repo.findAll();
+    for(let i in arr) {
+      if(arr[i].id == id) index = id;
     }
     if(index === -1) {
       throw new TodoNotFoundError(id);
@@ -29,7 +29,7 @@ export class TodoApi {
   async getAll(): Promise<Todo[]> {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve([...this.item]);
+        resolve(this.repo.findAll());
       }, this.random)
     });
     //throw new Error('getAll: not implemented');
@@ -38,8 +38,7 @@ export class TodoApi {
   async add(newTodo: NewTodo): Promise<Todo> {
     return new Promise(resolve => {
       setTimeout(() => {
-        this.item.push(createTodo(newTodo));
-        resolve(this.item[this.item.length])
+        resolve(this.repo.add(createTodo(newTodo)))
       }, this.random)
     });
     //throw new Error('add: not implemented');
@@ -50,8 +49,7 @@ export class TodoApi {
       setTimeout(() => {
         try {
           this.isTodoFound(id);
-          const updatedToDo = updateTodo(this.item, id, update);
-          resolve(updatedToDo[0]);
+          resolve(this.repo.update(id, update));
         } catch(error) {
           reject(error);
         }
@@ -67,8 +65,7 @@ export class TodoApi {
       setTimeout(() => {
         try{
           this.isTodoFound(id);
-          this.item = removeTodo(this.item, id);
-          resolve();
+          resolve(this.repo.remove(id));
         } catch(error) {
           reject(error);
         }
