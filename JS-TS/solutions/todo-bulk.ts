@@ -1,9 +1,9 @@
 import { Todo, TodoStatus } from './types';
+import { mapArray } from './array-helpers';
 
 export function toggleAll(state: Todo[], completed: boolean): Todo[] {
-  return state.map(todo => ({
-    ...todo, status: completed ? TodoStatus.COMPLETED : TodoStatus.PENDING
-  }));
+  const newStatus = completed ? TodoStatus.COMPLETED : TodoStatus.PENDING;
+  return mapArray(state, (todo) => ({...todo, status: newStatus}))
   //throw new Error('toggleAll: not implemented');
 }
 
