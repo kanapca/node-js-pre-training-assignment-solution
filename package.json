@@ -24,6 +24,6 @@
     "ts-jest": "^29.1.0"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.2.1"
   }
 }
