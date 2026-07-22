@@ -1,11 +1,9 @@
 import { InMemoryRepository } from './repository';
 import { Todo, NewTodo } from './types';
 import { createTodo } from './todo-factory';
-import { updateTodo, removeTodo } from './todo-crud';
-
 class TodoNotFoundError extends Error {
   constructor(id: number) {
-    if(id < 0 || id === 0) super("Can't have a Todo with negative id");
+    if(id < 0) super("Can't have a Todo with negative id");
     super(`Todo with id ${id} was not found`);
     this.name = "TodoNotFoundError";
   }
@@ -74,6 +72,5 @@ export class TodoApi {
     })
     //throw new Error('remove: not implemented');
   }
-
   
 }

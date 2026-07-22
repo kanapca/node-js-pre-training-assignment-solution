@@ -8,7 +8,7 @@ export class InMemoryRepository<T extends { id: number }> {
   add(entity: T): T {
     this.items.push(entity);
     //throw new Error('add: not implemented');
-    return this.items[this.items.length];
+    return this.items[this.items.length - 1];
   }
 
   update(id: number, patch: Partial<T>): T {
@@ -29,7 +29,7 @@ export class InMemoryRepository<T extends { id: number }> {
     //throw new Error('remove: not implemented');
   }
 
-  findById(id: number): T | undefined {
+  findById(id: number): T | undefined{
     const result = filterArray(this.items, item => item.id === id);
     return result[0];
     //throw new Error('findById: not implemented');
