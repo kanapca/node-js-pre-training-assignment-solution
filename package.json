@@ -1,6 +1,7 @@
 {
   "name": "node.js-pre-training-pracrice",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -20,10 +21,14 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^30.0.0",
+    "@types/mocha": "^10.0.10",
     "jest": "^30.4.2",
     "ts-jest": "^29.4.12"
   },
   "dependencies": {
     "express": "^5.2.1"
+  },
+  "allowScripts": {
+    "unrs-resolver@1.12.2": true
   }
 }
