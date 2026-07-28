@@ -13,8 +13,12 @@ describe('create', () => {
 
   it('toggleStatus() should change status', async() => {
     const [todo] = await service.search('service');
-    const toggled = await service.toggleStatus(todo.id);
-    expect(toggled.status).not.toBe(todo.status);
+    const toggled = await service.toggleStatus(todo!.id);
+    expect(toggled.status).not.toBe(todo!.status);
+  })
+
+  it('error must be thrown when updating non-existent id', async() => {
+    await expect(service.toggleStatus(-1)).rejects.toThrow();
   })
 
   it('search() shpuld return matching items', async() => {

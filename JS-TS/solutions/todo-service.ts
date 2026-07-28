@@ -11,6 +11,9 @@ export class TodoService {
   }
 
   async toggleStatus(id: number): Promise<Todo> {
+    if(id < 0) {
+      throw new Error("Can't have a todo with negative id")
+    }
     const todos = await this.api.getAll();
     if(!todos) {
       throw new Error("No todos");
