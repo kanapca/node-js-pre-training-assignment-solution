@@ -6,20 +6,22 @@ export class InMemoryRepository<T extends { id: number }> {
   private items: T[] = [];
 
   add(entity: T): T {
+    if(!entity) {
+      throw new Error("Can't add null");
+    }
     this.items.push(entity);
     //throw new Error('add: not implemented');
-    return this.items[this.items.length - 1];
+    return this.items[this.items.length - 1]!;
   }
 
   update(id: number, patch: Partial<T>): T {
     for(let i in this.items) {
-      if(this.items[i].id === id) {
-        this.items[i] = { ...this.items[i], ...patch}
-        return this.items[i];
+      if(this.items[i]!.id === id) {
+        this.items[i] = { ...this.items[i], ...patch} as T;
+        return this.items[i]!;
       }
     }
-    //return { ...this.items[id], ...patch}
-    throw new Error('Unexpected error');
+    throw new Error(`Didn't find todo with id ${id}`);
   }
 
   remove(id: number): void {
