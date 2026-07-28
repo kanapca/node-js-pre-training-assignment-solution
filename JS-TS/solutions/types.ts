@@ -14,4 +14,6 @@ enum TodoStatus {
 
 type NewTodo = Omit<Todo, "id" | "createdAt">
 
-export { Todo, NewTodo, TodoStatus };
+export type { Todo, NewTodo }
+
+export { TodoStatus };
