@@ -12,8 +12,8 @@ export function updateTodo(state: Todo[], id: number, update: Partial<Omit<Todo,
   }
   const result: Todo[] = [...state];
   for(let i in result) {
-    if(result[i].id === id) {
-      result[i] = {...result[i], ...update};
+    if(result[i]!.id === id) {
+      result[i] = {...result[i], ...update} as Todo;
       return result;
     }
   }
@@ -37,10 +37,13 @@ export function removeTodo(state: Todo[], id: number): Todo[] {
 }
 
 export function getTodo(state: Todo[], id: number): Todo | undefined {
+  if(!state) {
+    throw new Error("no todos");
+  }
   const result: Todo[] = [];
   for(let i in state) {
-    if(state[i].id === id) {
-      result[0] = state[i];
+    if(state[i]!.id === id) {
+      result[0] = state[i] as Todo;
       return result[0];
     }
   }

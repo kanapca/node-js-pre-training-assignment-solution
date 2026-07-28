@@ -1,6 +1,7 @@
 import { TodoApi } from './todo-api';
 import { Todo, TodoStatus } from './types';
 import { filterArray } from './array-helpers';
+import { TodoNotFoundError } from './todo-api';
 
 export class TodoService {
   constructor(private readonly api: TodoApi) { }
@@ -11,10 +12,15 @@ export class TodoService {
 
   async toggleStatus(id: number): Promise<Todo> {
     const todos = await this.api.getAll();
+    if(!todos) {
+      throw new Error("No todos");
+    }
     const result = filterArray(todos, todo => todo.id === id);
-
+    if(!result) {
+      throw new TodoNotFoundError(id);
+    }
     let newStatus: TodoStatus;
-    switch(result[0].status) {
+    switch(result[0]!.status) {
       case TodoStatus.COMPLETED: newStatus = TodoStatus.IN_PROGRESS; break;
       case TodoStatus.IN_PROGRESS: newStatus = TodoStatus.COMPLETED; break;
       case TodoStatus.PENDING: newStatus = TodoStatus.IN_PROGRESS; break;

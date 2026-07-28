@@ -1,10 +1,13 @@
 import { InMemoryRepository } from './repository';
 import { Todo, NewTodo } from './types';
 import { createTodo } from './todo-factory';
-class TodoNotFoundError extends Error {
+export class TodoNotFoundError extends Error {
   constructor(id: number) {
-    if(id < 0) super("Can't have a Todo with negative id");
-    super(`Todo with id ${id} was not found`);
+    if(id < 0) {
+      super("Can't have a Todo with negative id");
+    } else {
+      super(`Todo with id ${id} was not found`);
+    }
     this.name = "TodoNotFoundError";
   }
 }
@@ -16,8 +19,11 @@ export class TodoApi {
   isTodoFound(id: number) {
     let index = -1;
     let arr = this.repo.findAll();
+    if(!arr) {
+      throw new Error("No todos");
+    }
     for(let i in arr) {
-      if(arr[i].id == id) index = id;
+      if(arr[i]!.id == id) index = id;
     }
     if(index === -1) {
       throw new TodoNotFoundError(id);
