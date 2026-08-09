@@ -1,156 +1,69 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// Task 02: Mini functional–utility library
-// All helpers are declared but not implemented.
+function nullUndefCheck<T, R>(source1: readonly T[], begining: boolean, message?: string) {
+    if(begining) {
+        if(source1 === null || source1 === undefined) {
+            throw new TypeError("Source can't be null or undefined");
+        }
+    } else {
+        if(source1 === null || source1 === undefined) {
+            throw new Error(`Couldn't ${message}`);
+        }
+    }
+}
+
 
 export function mapArray<T, R>(source: readonly T[], mapper: (item: T, index: number) => R): R[] {
-  try {
-    if(source == null || source == undefined) {
-      throw new TypeError("Can't map over null or undefined source");
-    }
-
+    nullUndefCheck(source, true);
 
     const result: R[] = [];
-    let i = 0;
+    let index = 0;
     for(const item of source) {
-      result[i] = mapper(item, i++);
+        result[index] = mapper(item, index++);
     }
 
+    
+    nullUndefCheck(result, false, "map the array");
     return result;
-
-  } catch(error) {
-    if(error instanceof Error){
-      console.error(error.message);
-    } else {
-      console.error("Unknown error");
-    }
-
-
-    throw error;
-  }
-  
-
-  
-  //throw new Error('mapArray: not implemented');
 }
 
 export function filterArray<T>(source: readonly T[], predicate: (item: T, index: number) => boolean): T[] {
-  try {
-    if(source == null || source == undefined) {
-      throw new TypeError("Can't filter null or undefined source");
-    }
-
+    nullUndefCheck(source, true);
 
     const result: T[] = [];
-    let sourceIndex = 0;
-    let resultIndex = 0;
-    for(const item of source){
-      if(predicate(item, sourceIndex)) {
-        result[resultIndex++] = item;
-      }
-    sourceIndex++;
+    let index = 0;
+    let i = 0;
+    for(const item of source) {
+        predicate(item, index) ? result[i++] = item : index++;
     }
+
+    nullUndefCheck(result, false, "filter the array");
     return result;
-
-  } catch(error) {
-    if(error instanceof Error) {
-      console.error(error.message);
-    } else {
-      console.error("Unknown error");
-    }
-
-
-    throw error;
-  }
-  //throw new Error('filterArray: not implemented');
 }
 
 export function reduceArray<T, R>(source: readonly T[], reducer: (acc: R, item: T, index: number) => R, initial: R): R {
-  try {
-    if(source == null || source == undefined) {
-      throw new TypeError("Can't reduce null or undefined source");
-    }
-    let result: R = initial;
-    let i = 0;
+    nullUndefCheck(source, true);
+
+    const result: R[] = [];
     for(const item of source) {
-      result = reducer(result, item, i)
+        
     }
-
-    return result;
-
-  } catch(error) {
-    if(error instanceof Error) {
-      console.error(error.message);
-    } else {
-      console.error("Unknown error");
-    }
-
-    throw error;
-  }
-  
-  //throw new Error('reduceArray: not implemented');
 }
 
 export function partition<T>(source: readonly T[], predicate: (item: T) => boolean): [T[], T[]] {
-  try {
-    if(source == null || source == undefined) {
-      throw new TypeError("Can't part null or undefined source");
-    }
-    
-    const result1: T[] = [];
-    const result2: T[] = [];
-    let i1 = 0;
-    let i2 = 0;
-
+    nullUndefCheck(source, true);
+    let op1: T[] = [];
+    let op2: T[] = [];
+    let index1 = 0;
+    let index2 = 0;
     for(const item of source) {
-      if(predicate(item)) {
-        result1[i1++] = item;
-      } else {
-        result2[i2++] = item;
-      }
+        predicate(item) ? op1[index1++] = item : op2[index2++] = item;
     }
 
-    return [result1, result2];
+    nullUndefCheck(op1, false, "perform a partition of the array");
+    nullUndefCheck(op2, false, "perform a partition of the array");
 
-  } catch(error) {
-    if(error instanceof Error) {
-      console.error(error.message);
-    } else {
-      console.error("Unknown error");
-    }
-
-    throw error;
-  }
-  
-  //throw new Error('partition: not implemented');
+    return [op1, op2];
 }
 
 export function groupBy<T, K extends PropertyKey>(source: readonly T[], keySelector: (item: T) => K): Record<K, T[]> {
-  try {
-    if(source == null || source == undefined) {
-      throw new TypeError("Can't group null or undefined source");
-    }
-    const result = {} as Record<K, T[]>;
-    for(const item of source) {
-      const key = keySelector(item);
-
-      if (!result[key]) {
-        result[key] = [];
-      }
-
-      result[key][result[key].length] = item;
-    }
-
-    return result;
-
-  } catch(error) {
-    if(error instanceof Error) {
-      console.error(error.message);
-    } else {
-      console.error("Unknown error");
-    }
-
-    throw error;
-  }
-  
-  //throw new Error('groupBy: not implemented');
+    nullUndefCheck(source, true);
 }
