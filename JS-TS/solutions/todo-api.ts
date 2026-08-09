@@ -33,7 +33,7 @@ export class TodoApi {
         return new Promise(resolve => {
             setTimeout(() => {
                 const todo = createTodo(newTodo)
-                this.api = [...this.api, todo];
+                this.api = addTodo(this.api, todo);
                 resolve({...todo});
             }, random);
         });
