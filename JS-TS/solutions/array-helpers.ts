@@ -45,7 +45,7 @@ export function reduceArray<T, R>(source: readonly T[], reducer: (acc: R, item: 
     let index = 0;
     let result = initial;
     for(const item of source) {
-        initial = reducer(initial, item, index++);
+        result = reducer(result, item, index++);
     }
 
     return result;
