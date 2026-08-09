@@ -34,5 +34,8 @@ export function removeTodo(state: Todo[], id: number): Todo[] {
 }
 
 export function getTodo(state: Todo[], id: number): Todo | undefined {
+    let result: Todo[] = state;
+    result = filterArray(result, todo => todo.id == id);
 
+    return result[0];
 }
