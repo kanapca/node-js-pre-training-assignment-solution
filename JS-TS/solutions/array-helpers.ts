@@ -69,4 +69,20 @@ export function partition<T>(source: readonly T[], predicate: (item: T) => boole
 
 export function groupBy<T, K extends PropertyKey>(source: readonly T[], keySelector: (item: T) => K): Record<K, T[]> {
     nullUndefCheck(source, true);
+
+    const result = {} as Record<K, T[]>;
+    for(const item of source) {
+        const key = keySelector(item);
+
+        if(!result[key]) {
+            result[key] = [];
+        }
+
+        result[key][result[key].length] = item;
+    }
+
+    if(result === null || result === undefined) {
+        throw new Error("Couldn't group the array");
+    }
+    return result;
 }
