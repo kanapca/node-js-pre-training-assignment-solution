@@ -1,7 +1,6 @@
-import { filterArray } from "./array-helpers";
 import { Todo, NewTodo } from "./types";
 import { createTodo } from "./todo-factory";
-import { addTodo, updateTodo, removeTodo } from "./todo-crud";
+import { InMemoryRepository } from "./repository";
 
 class TodoNotFoundError extends Error {
    constructor(id: number) {
@@ -15,14 +14,17 @@ class TodoNotFoundError extends Error {
 }
 
 export class TodoApi {
-    private api: Todo[] = [];
+    private repo = new InMemoryRepository<Todo>();
 
     async getAll(): Promise<Todo[]> {
         let random = Math.random() * 300;
 
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve([...this.api]);
+                if(!this.repo) {
+                    reject(new Error("No todos :("));
+                }
+                resolve(this.repo.findAll());
             }, random);
         });
     }
@@ -32,9 +34,7 @@ export class TodoApi {
 
         return new Promise(resolve => {
             setTimeout(() => {
-                const todo = createTodo(newTodo)
-                this.api = addTodo(this.api, todo);
-                resolve({...todo});
+                resolve(this.repo.add(createTodo(newTodo)));
             }, random);
         });
     }
@@ -42,11 +42,13 @@ export class TodoApi {
     async update(id: number, update: Partial<Omit<Todo, 'id' | 'createdAt'>>): Promise<Todo> {
         let random = Math.random() * 300;
 
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             setTimeout(() => {
-                this.api = updateTodo(this.api, id, update);
-                const updated = filterArray(this.api, todo => todo.id === id);
-                resolve(updated[0]!);
+                const existingTodo = this.repo.findById(id);
+                if(!existingTodo) {
+                    reject(new TodoNotFoundError(id));
+                }
+                resolve(this.repo.update(id, update));
             }, random);
         });
     }
@@ -54,10 +56,13 @@ export class TodoApi {
     async remove(id: number): Promise<void> {
         let random = Math.random() * 300;
         
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             setTimeout(() => {
-                this.api = removeTodo(this.api, id);
-                resolve();
+                const existingTodo = this.repo.findById(id);
+                if(!existingTodo) {
+                    reject(new TodoNotFoundError(id));
+                }
+                resolve(this.repo.remove(id));
             }, random);
         })
     }

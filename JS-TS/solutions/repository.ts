@@ -1,5 +1,3 @@
-import { Todo } from "./types";
-import { addTodo, removeTodo } from "./todo-crud";
 import { filterArray, mapArray } from "./array-helpers";
 
 export class InMemoryRepository<T extends { id: number }> {
