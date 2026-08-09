@@ -1,19 +1,15 @@
-interface Todo {
-    id: number;
-    title: string;
-    description?: string;
-    status?: TodoStatus;
-    readonly createdAt: Date;
-}
-
 enum TodoStatus {
     PENDING,
     IN_PROGRESS,
-    COMPLETED
+    COMPLETE
 }
 
-type NewTodo = Omit<Todo, "id" | "createdAt">
+interface Todo {
+    id:number;
+    title:string;
+    description?:string;
+    status:TodoStatus;
+    readonly createdAt: Date;
+}
 
-export type { Todo, NewTodo }
-
-export { TodoStatus };
+type NewTodo = Omit<Todo, "id" | "createdAt">;

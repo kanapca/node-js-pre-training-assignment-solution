@@ -3,21 +3,28 @@ import { TodoApi } from './todo-api';
 import { Todo } from './types';
 
 export class ToDoManager {
-  private service = new TodoService(new TodoApi());
+  private api = new TodoApi();
+  private service = new TodoService(this.api);
 
   async init(): Promise<void> {
-    throw new Error('init: not implemented');
+    this.service.create("Todo1", "The first todo");
+    this.service.create("Todo2", "The second todo");
+    this.service.create("Todo3");
+    //throw new Error('init: not implemented');
   }
 
   async add(title: string, description = ''): Promise<void> {
-    throw new Error('add: not implemented');
+    await this.service.create(title, description);
+    //throw new Error('add: not implemented');
   }
 
   async complete(id: number): Promise<void> {
-    throw new Error('complete: not implemented');
+    await this.service.toggleStatus(id);
+    //throw new Error('complete: not implemented');
   }
 
   async list(): Promise<Todo[]> {
-    throw new Error('list: not implemented');
+    return await this.api.getAll();
+    //throw new Error('list: not implemented');
   }
 }
