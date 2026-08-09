@@ -13,3 +13,6 @@ interface Todo {
 }
 
 type NewTodo = Omit<Todo, "id" | "createdAt">;
+
+export { TodoStatus };
+export type { Todo, NewTodo };
