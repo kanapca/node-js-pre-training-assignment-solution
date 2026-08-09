@@ -1,5 +1,5 @@
-function nullUndefCheck<T, R>(source1: readonly T[], begining: boolean, message?: string) {
-    if(begining) {
+function nullUndefCheck<T, R>(source1: readonly T[], beginning: boolean, message?: string) {
+    if(beginning) {
         if(source1 === null || source1 === undefined) {
             throw new TypeError("Source can't be null or undefined");
         }
@@ -9,7 +9,7 @@ function nullUndefCheck<T, R>(source1: readonly T[], begining: boolean, message?
         }
     }
 }
-
+//^ throws an error if input/output is null or undefined
 
 export function mapArray<T, R>(source: readonly T[], mapper: (item: T, index: number) => R): R[] {
     nullUndefCheck(source, true);
@@ -42,10 +42,13 @@ export function filterArray<T>(source: readonly T[], predicate: (item: T, index:
 export function reduceArray<T, R>(source: readonly T[], reducer: (acc: R, item: T, index: number) => R, initial: R): R {
     nullUndefCheck(source, true);
 
-    const result: R[] = [];
+    let index = 0;
+    let result = initial;
     for(const item of source) {
-        
+        result = reducer(result, item, index++);
     }
+
+    return result;
 }
 
 export function partition<T>(source: readonly T[], predicate: (item: T) => boolean): [T[], T[]] {
