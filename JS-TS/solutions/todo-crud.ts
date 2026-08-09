@@ -1,52 +1,24 @@
-import { Todo } from './types';
+import { Todo } from "./types";
+import { createTodo } from "./todo-factory";
+import { filterArray, mapArray } from "./array-helpers";
 
 export function addTodo(state: Todo[], todo: Todo): Todo[] {
-
-  return [...state, todo];
-  //throw new Error('addTodo: not implemented');
+    return [...state, todo]
 }
 
 export function updateTodo(state: Todo[], id: number, update: Partial<Omit<Todo, 'id' | 'createdAt'>>): Todo[] {
-  if(state == null || state == undefined) {
-    throw new Error("Can't update todo that wasn't added/doesn't exist");
-  }
-  const result: Todo[] = [...state];
-  for(let i in result) {
-    if(result[i]!.id === id) {
-      result[i] = {...result[i], ...update} as Todo;
-      return result;
-    }
-  }
-  
-  throw new Error(`Unexpected error`);
+    let result: Todo[] = state;
+    
+    filterArray(result, todo => todo.id === id);
+
+    result = mapArray(result, todo => todo.id === id ? {...todo, ...update} as Todo : todo);
+    return result;
 }
 
 export function removeTodo(state: Todo[], id: number): Todo[] {
-  if(state == null || state == undefined) {
-    throw new Error("Can't remove todo that wasn't added/doesn't exist");
-  }
-  const index = state.findIndex(todo => todo.id === id);
 
-  if(index === -1) {
-    throw new Error(`Todo with id ${id} not found`);
-  }
-
-  const result: Todo[] = [...state];
-  result.splice(index, 1);
-  return result;
 }
 
 export function getTodo(state: Todo[], id: number): Todo | undefined {
-  if(!state) {
-    throw new Error("no todos");
-  }
-  const result: Todo[] = [];
-  for(let i in state) {
-    if(state[i]!.id === id) {
-      result[0] = state[i] as Todo;
-      return result[0];
-    }
-  }
-  return undefined;
-  //throw new Error('getTodo: not implemented');
+
 }
