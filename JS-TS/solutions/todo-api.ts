@@ -42,7 +42,7 @@ export class TodoApi {
     async update(id: number, update: Partial<Omit<Todo, 'id' | 'createdAt'>>): Promise<Todo> {
         let random = Math.random() * 300;
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             setTimeout(() => {
                 this.api = updateTodo(this.api, id, update);
                 const updated = filterArray(this.api, todo => todo.id === id);

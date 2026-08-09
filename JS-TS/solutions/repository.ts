@@ -1,44 +1,32 @@
-import { updateTodo, removeTodo } from './todo-crud';
-import { filterArray } from './array-helpers'
+import { Todo } from "./types";
+import { addTodo, removeTodo } from "./todo-crud";
+import { filterArray, mapArray } from "./array-helpers";
 
 export class InMemoryRepository<T extends { id: number }> {
-  // private storage
-  private items: T[] = [];
+    private repository: T[] = [];
 
-  add(entity: T): T {
-    if(!entity) {
-      throw new Error("Can't add null");
+    add(entity: T): T {
+        let newIndex = this.repository.length;
+        this.repository[newIndex] = entity;
+        return this.repository[newIndex];
     }
-    this.items.push(entity);
-    //throw new Error('add: not implemented');
-    return this.items[this.items.length - 1]!;
-  }
 
-  update(id: number, patch: Partial<T>): T {
-    for(let i in this.items) {
-      if(this.items[i]!.id === id) {
-        this.items[i] = { ...this.items[i], ...patch} as T;
-        return this.items[i]!;
-      }
+    update(id: number, patch: Partial<T>): T {
+        this.repository = mapArray(this.repository, todo => todo.id === id ? {...todo, ...patch} : todo);
+        const result = this.findById(id);
+        return result;
     }
-    throw new Error(`Didn't find todo with id ${id}`);
-  }
 
-  remove(id: number): void {
-    const index = this.items.findIndex(todo => todo.id === id);
-    this.items.splice(index, 1);
-    //this.items = removeTodo(this.items, id);
-    //throw new Error('remove: not implemented');
-  }
+    remove(id: number): void {
+        this.repository = filterArray(this.repository, todo => todo.id !== id);
+    }
 
-  findById(id: number): T | undefined{
-    const result = filterArray(this.items, item => item.id === id);
-    return result[0];
-    //throw new Error('findById: not implemented');
-  }
+    findById(id: number): T {
+        let result = filterArray(this.repository, todo => todo.id === id);
+        return result[0]!;
+    }
 
-  findAll(): T[] {
-    return [...this.items]
-    //throw new Error('findAll: not implemented');
-  }
+    findAll(): T[] {
+        return [...this.repository];
+    }
 }
