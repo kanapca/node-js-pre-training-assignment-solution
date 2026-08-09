@@ -6,6 +6,9 @@ export class TodoService {
     constructor(private readonly api: TodoApi) { }
 
     async create(title: string, description?: string): Promise<Todo> {
+        if(title === null || title === undefined) {
+            throw new Error("Can't create a todo without a title");
+        }
         return await this.api.add({title, description} as NewTodo)
     }
 
@@ -15,6 +18,9 @@ export class TodoService {
     }
 
     async search(keyword: string): Promise<Todo[]> {
+        if(keyword === null || keyword === undefined) {
+            throw new Error("Can't find a todo without a key word");
+        }
         const todos = await this.api.getAll();
         const lowerCase = keyword.toLowerCase();
 
