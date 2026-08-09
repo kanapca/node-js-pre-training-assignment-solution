@@ -42,12 +42,13 @@ export function filterArray<T>(source: readonly T[], predicate: (item: T, index:
 export function reduceArray<T, R>(source: readonly T[], reducer: (acc: R, item: T, index: number) => R, initial: R): R {
     nullUndefCheck(source, true);
 
-    let index = 0;;
+    let index = 0;
+    let result = initial;
     for(const item of source) {
         initial = reducer(initial, item, index++);
     }
 
-    return initial;
+    return result;
 }
 
 export function partition<T>(source: readonly T[], predicate: (item: T) => boolean): [T[], T[]] {
