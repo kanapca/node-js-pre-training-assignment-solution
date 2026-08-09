@@ -1,44 +1,26 @@
-import { TodoApi } from './todo-api';
-import { Todo, TodoStatus } from './types';
-import { filterArray } from './array-helpers';
-import { TodoNotFoundError } from './todo-api';
+import { NewTodo, Todo, TodoStatus} from "./types";
+import { TodoApi } from "./todo-api";
+import { filterArray } from "./array-helpers";
 
 export class TodoService {
-  constructor(private readonly api: TodoApi) { }
+    constructor(private readonly api: TodoApi) { }
 
-  async create(title: string, description = ''): Promise<Todo> {
-    return this.api.add({title, description})
-  }
+    async create(title: string, description?: string): Promise<Todo> {
+        return await this.api.add({title, description} as NewTodo)
+    }
 
-  async toggleStatus(id: number): Promise<Todo> {
-    if(id < 0) {
-      throw new Error("Can't have a todo with negative id")
+    async toggleStatus(id: number): Promise<Todo> {
+        const todos = await this.api.getAll();
+        return this.api.update(id, {status: TodoStatus.COMPLETED ? TodoStatus.IN_PROGRESS : TodoStatus.COMPLETED});
     }
-    const todos = await this.api.getAll();
-    if(!todos) {
-      throw new Error("No todos");
-    }
-    const result = filterArray(todos, todo => todo.id === id);
-    if(!result) {
-      throw new TodoNotFoundError(id);
-    }
-    let newStatus: TodoStatus;
-    switch(result[0]!.status) {
-      case TodoStatus.COMPLETED: newStatus = TodoStatus.IN_PROGRESS; break;
-      case TodoStatus.IN_PROGRESS: newStatus = TodoStatus.COMPLETED; break;
-      case TodoStatus.PENDING: newStatus = TodoStatus.IN_PROGRESS; break;
-      default: newStatus = TodoStatus.PENDING; break;
-    }
-    return this.api.update(id, {status: newStatus});
-  }
 
-  async search(keyword: string): Promise<Todo[]> {
-    const todos = await this.api.getAll();
-    const lowerKeyword = keyword.toLowerCase();
-  
-    return filterArray(todos, todo => 
-      todo.title.toLowerCase().includes(lowerKeyword) ||
-      (todo.description?.toLowerCase().includes(lowerKeyword) || false)
-    );
-}
+    async search(keyword: string): Promise<Todo[]> {
+        const todos = await this.api.getAll();
+        const lowerCase = keyword.toLowerCase();
+
+        return filterArray(todos, todo => 
+            todo.title.toLowerCase().includes(lowerCase) ||
+            todo.description?.toLowerCase().includes(lowerCase) || false
+        );
+    }
 }
