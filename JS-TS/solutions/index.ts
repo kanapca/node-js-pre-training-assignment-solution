@@ -36,4 +36,16 @@ class CLI {
         await this.manager.add(title, description);
         console.log(`Added todo "${title}"`);
     }
+
+    private async handleComplete(args: string[]): Promise<void> {
+        const id = parseInt(args[1]);
+
+        if(!id || isNaN(id)) {
+            console.error("Please provide a valid ID");
+            return;
+        }
+
+        await this.manager.complete(id);
+        console.log(`Todo ${id} is toggled`);
+    }
 }
