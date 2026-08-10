@@ -17,6 +17,8 @@ class CLI {
 
             switch(command) {
                 case "add": await this.handleAdd(args); break;
+                case "complete": await this.handleComplete(args);break;
+                case "list": await this.handleList();break;
             }
         } catch(error) {
             console.error("Error");
@@ -38,14 +40,38 @@ class CLI {
     }
 
     private async handleComplete(args: string[]): Promise<void> {
-        const id = parseInt(args[1]);
-
-        if(!id || isNaN(id)) {
+        const idStr = args[1];
+    
+        if (!idStr) {
             console.error("Please provide a valid ID");
+            return;
+        }
+
+        const id = parseInt(idStr);
+        if (isNaN(id)) {
+            console.error(" Please provide a valid number for ID");
             return;
         }
 
         await this.manager.complete(id);
         console.log(`Todo ${id} is toggled`);
     }
+
+    private async handleList(): Promise<void> {
+        const todos = await this.manager.list();
+
+        if(todos.length === 0) {
+            console.log("No todos :(");
+            return;
+        }
+
+        console.log("Todo list:");
+
+        todos.forEach((todo: Todo) => {
+            console.log(`${todo.id} || ${todo.title} || ${todo.status}`);
+        })
+    }
 }
+
+const cli = new CLI();
+cli.run().catch(console.error);
