@@ -68,7 +68,7 @@ class CLI {
         console.log("Todo list:");
 
         todos.forEach((todo: Todo) => {
-            console.log(`${todo.id} || ${todo.title} || ${todo.status}`);
+            console.log(`${todo.id} || ${todo.title} || ${todo.description}`);
         })
     }
 }
