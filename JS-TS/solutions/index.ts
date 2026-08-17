@@ -66,8 +66,20 @@ export class CLI {
         }
 
         console.log("Todo list:");
+        
+        todos.forEach((todo: Todo) => {
+            let status: string;
+            switch(todo.status) {
+                case TodoStatus.COMPLETED: status = "Completed"; break;
+                case TodoStatus.IN_PROGRESS: status = "In progress"; break;
+                case TodoStatus.PENDING: status = "Pending"; break;
+            }
+            console.log(`${todo.id} || ${todo.title} || ${todo.description} || ${status}`);
+        })
     }
 }
 
-const cli = new CLI();
-cli.run().catch(console.error);
+if (require.main === module) {
+    const cli = new CLI();
+    cli.run().catch(console.error);
+}
