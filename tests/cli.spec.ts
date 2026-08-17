@@ -4,9 +4,10 @@ describe('Cli should work', () => {
     jest.setTimeout(10000);
     const cli = new CLI();
 
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    
 
     it('handleAdd should add new todo', async() => {
+        const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
         await cli.run(['add', 'TestTodo']);
         await cli.run(['list']);
 
@@ -14,5 +15,17 @@ describe('Cli should work', () => {
         expect(output).toContain('TestTodo');
 
         logSpy.mockRestore();
-    })
+    });
+
+    it('toggle should change todo status', async() => {
+        const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+        await cli.run(['add', 'Toggle me!', 'I shall be toggled']);
+        await cli.run(['complete', '5']);
+        await cli.run(['list']);
+
+        const output = logSpy.mock.calls.map((call) => call.join(' ')).join('\n');
+        expect(output).toContain('Completed');
+
+        logSpy.mockRestore();
+    });
 })
