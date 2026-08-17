@@ -14,7 +14,12 @@ export class TodoService {
 
     async toggleStatus(id: number): Promise<Todo> {
         const todos = await this.api.getAll();
-        return this.api.update(id, {status: TodoStatus.COMPLETED ? TodoStatus.IN_PROGRESS : TodoStatus.COMPLETED});
+        let todo = filterArray(todos, todo => todo.id === id);
+
+        const newStatus = todo[0]!.status === TodoStatus.COMPLETED
+        ? TodoStatus.PENDING
+        : TodoStatus.COMPLETED;
+        return this.api.update(id, {status: newStatus});
     }
 
     async search(keyword: string): Promise<Todo[]> {
