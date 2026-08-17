@@ -9,7 +9,7 @@
     // See also https://aka.ms/tsconfig/module
     "target": "ES2020",
     "module": "CommonJS",     
-    "moduleResolution": "Node10",
+    "moduleResolution": "node",
     "types": ["node", "jest"],
     // For nodejs:
     // "lib": ["esnext"],
@@ -22,7 +22,6 @@
     "declarationMap": true,
 
     // Stricter Typechecking Options
-    "allowImportingTsExtensions": true,
     "noEmit": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
@@ -38,9 +37,7 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": false,
     "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
   }
