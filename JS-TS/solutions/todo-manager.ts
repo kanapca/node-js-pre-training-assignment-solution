@@ -5,8 +5,14 @@ import { TodoService } from "./todo-service";
 export class ToDoManager {
     private api = new TodoApi();
     private service = new TodoService(this.api);
+    private isInitialized = false;
 
     async init(): Promise<void> {
+        if (this.isInitialized) {
+            return;
+        }
+        this.isInitialized = true;
+        
         await this.service.create("Todo1", "With description");
         await this.service.create("Todo2");
         await this.service.create("Todo3", "With description again");
