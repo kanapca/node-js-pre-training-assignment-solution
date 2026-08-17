@@ -16,6 +16,7 @@
     "test:js-ts-all": "jest --testPathPatterns=js-ts-task",
     "test:js-ts-10": "jest tests/js-ts-task-10.test.ts",
     "test:todo-service": "jest tests/todo-service.spec.ts",
+    "test:cli": "jest tests/cli.spec.ts",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },

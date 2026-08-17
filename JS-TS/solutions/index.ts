@@ -1,11 +1,11 @@
-import { Todo } from "./types";
+import { Todo, TodoStatus } from "./types";
 import { ToDoManager } from "./todo-manager";
 
-class CLI {
+export class CLI {
     private manager = new ToDoManager();
 
-    async run(): Promise<void> {
-        const args = process.argv.slice(2);
+    async run(argv: string[] = process.argv.slice(2)): Promise<void> {
+        const args = argv;
         const command = args[0];
 
         if(!command) {
@@ -66,10 +66,6 @@ class CLI {
         }
 
         console.log("Todo list:");
-
-        todos.forEach((todo: Todo) => {
-            console.log(`${todo.id} || ${todo.title} || ${todo.description}`);
-        })
     }
 }
 
