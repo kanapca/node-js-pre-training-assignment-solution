@@ -1,5 +1,6 @@
 import React from 'react';
 import { TodoListProps } from '../../types';
+import { mapArray } from '../../../../../JS-TS/solutions/array-helpers'
 
 /**
  * Task 1: ToDoList Component
@@ -41,9 +42,14 @@ export const ToDoList: React.FC<TodoListProps> = ({ todos }) => {
 
   return (
     <div>
-      {/* TODO: Replace this with your implementation */}
       <h3>Todo List</h3>
-      <p>Implement the ToDoList component here</p>
+        <ul>
+          {todos.map(todo => (
+            <li key={todo.id}>
+              {todo.title} - {todo.completed ? 'completed' : 'not completed'}
+            </li>
+          ))}
+        </ul>
     </div>
   );
 }; 
