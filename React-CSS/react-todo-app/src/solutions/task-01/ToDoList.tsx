@@ -39,6 +39,14 @@ export const ToDoList: React.FC<TodoListProps> = ({ todos }) => {
   //   { id: 1, title: 'Learn React', completed: false },
   //   { id: 2, title: 'Build Todo App', completed: true }
   // ]} />
+  if(todos.length === 0) {
+    return (
+      <div>
+        <h3>Todo List</h3>
+        <p>No todos!</p>
+      </div>
+    )
+  }
 
   return (
     <div>
