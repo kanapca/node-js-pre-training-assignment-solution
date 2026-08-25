@@ -44,6 +44,39 @@ import { Todo } from '../../types';
  * - Keep state minimal and derive the rest
  */
 export const FilteredToDoList: React.FC = () => {
+  const [input, setValue] = useState('');
+  const [todos, updateTodos] = useState<Todo[]>([]);
+
+  const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
+  const filterTodos = todos.filter(todo => {
+    if(filter === 'active') return !todo.completed;
+    if(filter === 'completed') return todo.completed;
+    return true
+  })
+
+  const markCompleted = (id: number) => {
+    updateTodos(todos.map(todo => 
+      todo.id === id ? {...todo, completed: true} : todo
+    ))
+  }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if(input.trim() === '') {
+      return;
+    }
+
+    const newId = todos.length;
+    const newTodo: Todo = {
+      title: input,
+      id: newId,
+      completed: false
+    }
+
+    updateTodos([...todos, newTodo]);
+    setValue('');
+  }
   // TODO: Implement the FilteredToDoList component
   // 
   // Requirements:
@@ -65,9 +98,42 @@ export const FilteredToDoList: React.FC = () => {
 
   return (
     <div>
-      {/* TODO: Replace this with your implementation */}
-      <h4>Filtered ToDo List Component</h4>
-      <p>Implement derived state and filtering here</p>
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="text"
+          value={input}
+          onChange={event => setValue(event.target.value)}
+          placeholder="add todo">
+        </input>
+
+        <button type='submit'>Add todo</button>
+      </form>
+      {todos.map(todo => (
+        <p key={todo.id}>
+          {todo.id} - {todo.title} - {todo.completed ? "completed": "in progress"}
+          <button onClick={() => markCompleted(todo.id)}>
+            {todo.completed ? "Mark Incomplete" : "Mark Complete"}
+          </button>
+        </p>
+      ))}
+
+      <button onClick={() => setFilter('all')} disabled={filter === 'all'}>
+        All
+      </button>
+      <button onClick={() => setFilter('active')} disabled={filter === 'active'}>
+        Active
+      </button>
+      <button onClick={() => setFilter('completed')} disabled={filter === 'completed'}>
+        Completed
+      </button>
+
+      {filterTodos.map(todo => (
+        <p key = {todo.id}>
+          {todo.id} - {todo.title} - {todo.completed ? "completed": "in progress"}
+        </p>
+      ))}
+
+
     </div>
   );
 }; 
