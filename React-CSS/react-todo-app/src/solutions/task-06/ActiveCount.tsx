@@ -46,6 +46,13 @@ import { ActiveCountProps } from '../../types';
  * - Consider prop drilling vs context for deep data passing
  */
 export const ActiveCount: React.FC<ActiveCountProps> = ({ todos }) => {
+
+  const activeCount = todos.filter(todo => !todo.completed).length;
+
+  const getActiveText = (count: number) => {
+    if(count === 1) return '1 active todo'
+    return `${count} active todos`
+  }
   // TODO: Implement the ActiveCount component
   // 
   // Requirements:
@@ -62,9 +69,7 @@ export const ActiveCount: React.FC<ActiveCountProps> = ({ todos }) => {
 
   return (
     <div>
-      {/* TODO: Replace this with your implementation */}
-      <h4>Active Count Component</h4>
-      <p>Calculate and display active todos count here</p>
+      <p>{getActiveText(activeCount)}</p>
     </div>
   );
 }; 
