@@ -70,7 +70,7 @@ export const FetchToDos: React.FC = () => {
   useEffect(() => {
     fetchToDos();
   }, []);
-
+ 
   const fetchToDos = () => {
     setTimeout(() => {
       fetch('https://jsonplaceholder.typicode.com/todos')
@@ -124,7 +124,7 @@ export const FetchToDos: React.FC = () => {
   return (
     <div>
       {loading 
-        ? <div style={{display: 'flex', justifyContent: 'center'}}><Loader /></div>
+        ? <div style={{display: 'flex', justifyContent: 'center'}}><p>loading</p><Loader /></div>
         : <ul>
             {todos.map(todo => (
               <li key={todo.id}>{todo.title}</li>
