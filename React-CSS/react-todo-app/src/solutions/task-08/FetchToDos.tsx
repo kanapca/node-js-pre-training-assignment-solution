@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Todo } from '../../types';
+import Loader from './loader/Loader';
 
 /**
  * Task 8: FetchToDos Component
@@ -67,7 +68,12 @@ export const FetchToDos: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/todos')
+    fetchToDos();
+  }, []);
+
+  const fetchToDos = () => {
+    setTimeout(() => {
+      fetch('https://jsonplaceholder.typicode.com/todos')
       .then(response => response.json())
       .then(data => {
         setTodos(data.slice(0, 5));
@@ -77,7 +83,9 @@ export const FetchToDos: React.FC = () => {
         setError(err.message);
         setLoading(false);
       })
-  }, []);
+    }, 1000);
+  }
+
   // TODO: Implement the FetchToDos component
   // 
   // Requirements:
@@ -115,11 +123,14 @@ export const FetchToDos: React.FC = () => {
 
   return (
     <div>
-      <ul>
-        {todos.map(todo => (
-          <li key={todo.id}>{todo.title}</li>
-        ))}
-      </ul>
+      {loading 
+        ? <div style={{display: 'flex', justifyContent: 'center'}}><Loader /></div>
+        : <ul>
+            {todos.map(todo => (
+              <li key={todo.id}>{todo.title}</li>
+            ))}
+          </ul>
+      }
     </div>
   );
 }; 
