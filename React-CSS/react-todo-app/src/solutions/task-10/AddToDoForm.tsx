@@ -73,6 +73,22 @@ import { Todo } from '../../types';
  * - Clear form after successful submission
  */
 export const AddToDoForm: React.FC = () => {
+  const [title, setTitle] = useState('');
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if(!title.trim()) return;
+
+    const newTodo: Todo = {
+      id: Date.now(),
+      title: title.trim(),
+      completed: false
+    };
+
+    setTodos([...todos, newTodo]);
+    setTitle('');
+  }
   // TODO: Implement the AddToDoForm component
   // 
   // Requirements:
@@ -102,9 +118,22 @@ export const AddToDoForm: React.FC = () => {
 
   return (
     <div>
-      {/* TODO: Replace this with your implementation */}
-      <h4>Add ToDo Form Component</h4>
-      <p>Implement controlled form handling here</p>
+      <form onSubmit={handleSubmit}>
+        <input 
+          type='text'
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          placeholder='add todo' 
+        />
+
+        <button type='submit'>submit</button>
+      </form>
+
+      <ul>
+        {todos.map(todo => (
+          <li key={todo.id}>{todo.title}</li>
+        ))}
+      </ul>
     </div>
   );
 }; 
