@@ -1,4 +1,4 @@
-import express, { type Express, type Request, type Response, type NextFunction } from 'express';
+import express, { type Express, type Request, type Response } from 'express';
 
 const APP: Express = express();
 const PORT = 3000;
