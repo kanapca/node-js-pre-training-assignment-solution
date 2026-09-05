@@ -4,7 +4,8 @@ const APP: Express = express();
 const PORT = 3000;
 
 APP.use((req: Request, res: Response, next: NextFunction) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    const start = Date.now();
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} - ${Date.now() - start}ms`);
     next();
 })
 
