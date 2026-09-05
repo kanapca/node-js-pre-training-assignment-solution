@@ -24,6 +24,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "^26.2.0",
@@ -39,5 +40,6 @@
   },
   "allowScripts": {
     "unrs-resolver@1.12.2": true
-  }
+  },
+  "type": "module"
 }

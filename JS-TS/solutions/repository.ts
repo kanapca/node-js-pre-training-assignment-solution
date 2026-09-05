@@ -6,7 +6,7 @@ export class InMemoryRepository<T extends { id: number }> {
     add(entity: T): T {
         let newIndex = this.repository.length;
         this.repository[newIndex] = entity;
-        return this.repository[newIndex];
+        return this.repository[newIndex]!;
     }
 
     update(id: number, patch: Partial<T>): T {
